@@ -4,8 +4,9 @@ define([
     'mage/translate',
     'mage/utils/wrapper',
     'Magento_Ui/js/modal/alert',
+    'Magento_Checkout/js/model/full-screen-loader',
     'Swissup_Recaptcha/js/model/recaptcha-assigner'
-], function ($, url, $t, wrapper, alert,  recaptchaAssigner) {
+], function ($, url, $t, wrapper, alert, loader, recaptchaAssigner) {
     'use strict';
 
     /**
@@ -18,10 +19,12 @@ define([
         var recaptcha = recaptchaAssigner.getRecaptcha(),
             formId = recaptcha ? recaptcha.element.attr('id') : '';
 
+        loader.startLoader();
         $.post(url.build("stripeIntegrationRecaptcha"), {
             form_id: formId,
             token: recaptcha.getResponse()
         }).then(function (response) {
+            loader.stopLoader();
             if (response.status === 'ok') {
                 return successCallback();
             }
@@ -31,6 +34,7 @@ define([
                 content: response.message || $t('Error occurred, please try again later.')
             });
         }).fail(function (response) {
+            loader.stopLoader();
             alert({
                 title: $t('Place Order'),
                 content: $t('Error occurred, please try again later.')
