@@ -1,0 +1,23 @@
+{
+    "name": "swissup/module-recaptcha-stripeintegration-payments",
+    "description": "This integration verifies recaptcha before sending data to Stripe server",
+    "keywords": [
+        "stripe payment",
+        "stripeintegration",
+        "swissup",
+        "recaptcha",
+        "magento"
+    ],
+    "require": {
+        "swissup/module-recaptcha": "^1.4.0"
+    },
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": "MIT",
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "Swissup\\RecaptchaStripeIntegrationPayments\\": ""
+        }
+    }
+}
